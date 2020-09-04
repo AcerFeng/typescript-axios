@@ -18,6 +18,10 @@ export type Method =
 
 export type XMLHttpRequestResponseType = '' | 'arraybuffer' | 'blob' | 'document' | 'json' | 'text'
 
+export interface AxiosTransformer {
+  (data: any, headers?: any): any
+}
+
 export interface AxiosRequestConfig {
   url?: string
   method?: Method
@@ -26,6 +30,9 @@ export interface AxiosRequestConfig {
   headers?: any
   responseType?: XMLHttpRequestResponseType
   timeout?: number
+  transformRequest?: AxiosTransformer | AxiosTransformer[]
+  transformResponse?: AxiosTransformer | AxiosTransformer[]
+  [propName: string]: any
 }
 
 export interface AxiosResponse<T = any> {
@@ -48,6 +55,7 @@ export interface AxiosError extends Error {
 }
 
 export interface Axios {
+  defaults: AxiosRequestConfig
   interceptors: {
     request: InterceptorManager<AxiosRequestConfig>
     response: InterceptorManager<AxiosResponse>
