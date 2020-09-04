@@ -34,6 +34,8 @@ registerErrorRouter()
 
 registerExtendRouter()
 
+registerInterceptorRrouter()
+
 function registerSimpleRouter() {
   router.get('/simple/get', function(req, res) {
     res.json({
@@ -127,6 +129,12 @@ function registerExtendRouter() {
         age: 18
       }
     })
+  })
+}
+
+function registerInterceptorRrouter() {
+  router.get('/interceptor/get', function (req, res) {
+    res.end('hello ')
   })
 }
 
