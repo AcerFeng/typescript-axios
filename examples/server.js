@@ -34,9 +34,11 @@ registerErrorRouter()
 
 registerExtendRouter()
 
-registerInterceptorRrouter()
+registerInterceptorRouter()
 
 registerConfigRouter()
+
+registerCancelRouter()
 
 function registerSimpleRouter() {
   router.get('/simple/get', function(req, res) {
@@ -134,7 +136,7 @@ function registerExtendRouter() {
   })
 }
 
-function registerInterceptorRrouter() {
+function registerInterceptorRouter() {
   router.get('/interceptor/get', function (req, res) {
     res.end('hello ')
   })
@@ -143,6 +145,20 @@ function registerInterceptorRrouter() {
 function registerConfigRouter() {
   router.post('/config/post', function (req, res) {
     res.json(req.body)
+  })
+}
+
+function registerCancelRouter() {
+  router.get('/cancel/get', function (req, res) {
+    setTimeout(() => {
+      res.json('hello')
+    }, 4000)
+  })
+
+  router.post('/cancel/post', function (req, res) {
+    setTimeout(() => {
+      res.json(req.body)
+    }, 4000)
   })
 }
 
