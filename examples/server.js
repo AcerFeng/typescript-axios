@@ -5,6 +5,9 @@ const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const WebpackConfig = require('./webpack.config')
 const cookieParser = require('cookie-parser')
+const mutipart = require('connect-multiparty')
+const { pathMatch } = require('webpack-hot-middleware/helpers')
+const path = require('path')
 
 require('./server2')
 
@@ -12,6 +15,10 @@ const app = express()
 const compiler = webpack(WebpackConfig)
 
 const router = express.Router()
+
+app.use(mutipart({
+  uploadDir: path.resolve(__dirname, 'upload-file')
+}))
 
 app.use(webpackDevMiddleware(compiler, {
   publicPath: '/__build__/',
@@ -175,6 +182,11 @@ function registerCancelRouter() {
 function registerMoreRouter() {
   router.get('/more/get', (req, res) => {
     res.json(req.cookies)
+  })
+
+  router.post('/more/upload', function(req, res) {
+    console.log(req.body, req.files)
+    res.end('upload success!')
   })
 
   router.post('/more/post', function (req, res) {
