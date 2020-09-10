@@ -1,6 +1,7 @@
 import axios from '../../src/index'
 import NProgress from 'nprogress'
 import { response } from 'express'
+import { AxiosError } from '../../src/helpers/error'
 
 document.cookie = 'a=b'
 
@@ -95,4 +96,20 @@ axios.post('/more/post', {
     username: 'Leon2',
     password: '123456'
   }
+})
+
+axios.get('/more/304').then(res => {
+  console.log(res)
+}).catch((e: AxiosError) => {
+  console.log(e.message)
+})
+
+axios.get('/more/304', {
+  validateStatus(status) {
+    return status >= 200 && status < 400
+  }
+}).then(res => {
+  console.log(res)
+}).catch((e: AxiosError) => {
+  console.log(e.message)
 })
