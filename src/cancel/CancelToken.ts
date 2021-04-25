@@ -17,6 +17,7 @@ export default class CancelToken {
     */
     let resolvePromise: ResolvePromise
     this.promise = new Promise<Cancel>(resolve => {
+      // @ts-ignore
       resolvePromise = resolve
     })
 
